@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
 import org.json.JSONObject
+import pojo.RequestResult
 import java.io.IOException
 
 
@@ -35,8 +37,8 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (response.isSuccessful) {
-                        var jsonResponse = JSONObject(response.body!!.string())
-
+                        //var jsonResponse = JSONObject(response.body!!.string())
+                        var result = Gson().fromJson(response.body!!.string(), RequestResult::class.java)
                         print("324")
                     }
                 }
