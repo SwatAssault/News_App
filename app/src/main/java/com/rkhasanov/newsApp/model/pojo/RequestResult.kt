@@ -1,4 +1,4 @@
-package pojo
+package com.rkhasanov.newsApp.model.pojo
 
 class RequestResult {
     var status: String? = null
