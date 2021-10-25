@@ -7,4 +7,5 @@
     <dimen name="article_item_desc_size">15sp</dimen>
     <dimen name="article_item_desc_margin">5dp</dimen>
     <dimen name="app_margin">10dp</dimen>
+    <dimen name="fetch_news_button_bottom_margin">70dp</dimen>
 </resources>

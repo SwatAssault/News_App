@@ -48,7 +48,9 @@ class NewsListFragment : Fragment() {
 
         newsListViewModel.getArticles().observe(this, newsListObserver)
 
-        newsListViewModel.fetch()
+        binding.fetchNewsButton.setOnClickListener {
+            newsListViewModel.fetch()
+        }
     }
 
     override fun onDestroyView() {
