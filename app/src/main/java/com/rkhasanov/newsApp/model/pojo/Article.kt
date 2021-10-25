@@ -1,8 +1,9 @@
 package com.rkhasanov.newsApp.model.pojo
 
+import java.io.Serializable
 import java.util.*
 
-class Article {
+class Article : Serializable {
     var source: Source? = null
     var author: String? = null
     var title: String? = null

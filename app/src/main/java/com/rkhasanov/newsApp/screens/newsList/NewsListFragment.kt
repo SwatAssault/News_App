@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
+import com.rkhasanov.newsApp.model.pojo.Article
 import com.rkhasanov.newsApp.model.pojo.RequestResult
+import com.rkhasanov.newsApp.utils.APP_CONTEXT
 import com.rkhasanov.newsApp.utils.toastPopUp
 
 class NewsListFragment : Fragment() {
@@ -44,13 +47,14 @@ class NewsListFragment : Fragment() {
 
         newsListObserver = Observer {
             adapter.setArticlesList(it.articles?.asReversed()!!)
-            toastPopUp(getString(R.string.news_fetched) + ": " + it.totalResults)
         }
 
         newsListViewModel.getRequestResult().observe(this, newsListObserver)
 
         binding.fetchNewsButton.setOnClickListener {
-            newsListViewModel.fetch()
+            newsListViewModel.fetch {
+
+            }
         }
     }
 
@@ -59,6 +63,14 @@ class NewsListFragment : Fragment() {
         _binding = null
         newsListViewModel.getRequestResult().removeObserver(newsListObserver)
         recyclerView.adapter = null
+    }
+
+    companion object {
+        fun onArticleClick(article: Article) {
+            val bundle = Bundle()
+            bundle.putSerializable("article", article)
+            APP_CONTEXT.navController.navigate(R.id.action_newsListFragment_to_articleFragment, bundle)
+        }
     }
 
 }

@@ -19,6 +19,17 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsHolder>() {
         return NewsHolder(view)
     }
 
+    override fun onViewAttachedToWindow(holder: NewsHolder) {
+        holder.itemView.setOnClickListener {
+            NewsListFragment.onArticleClick(articlesList[holder.adapterPosition])
+        }
+    }
+
+    override fun onViewDetachedFromWindow(holder: NewsHolder) {
+        holder.itemView.setOnClickListener(null)
+        super.onViewDetachedFromWindow(holder)
+    }
+
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         holder.articleTitle.text = articlesList[position].title
         holder.articleDescription.text = articlesList[position].description

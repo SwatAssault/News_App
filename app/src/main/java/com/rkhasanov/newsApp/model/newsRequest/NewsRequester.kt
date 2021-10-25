@@ -8,7 +8,7 @@ import java.io.IOException
 
 class NewsRequester {
 
-    fun execute(onResult: (response: RequestResult?) -> Unit, title: String) {
+    fun execute(title: String, onResult: (response: RequestResult?) -> Unit) {
         val url = "https://newsapi.org/v2/everything?qInTitle=$title"
         val client = OkHttpClient()
 

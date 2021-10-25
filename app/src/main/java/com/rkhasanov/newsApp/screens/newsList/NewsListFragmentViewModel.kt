@@ -1,11 +1,13 @@
 package com.rkhasanov.newsApp.screens.newsList
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rkhasanov.newsApp.model.newsRequest.NewsRequester
 import com.rkhasanov.newsApp.model.pojo.RequestResult
 
-class NewsListFragmentViewModel : ViewModel() {
+class NewsListFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     private var requestResult = MutableLiveData<RequestResult>()
 
@@ -15,11 +17,23 @@ class NewsListFragmentViewModel : ViewModel() {
         return requestResult
     }
 
-    fun fetch(title: String = "Android") {
-        val list = listOf("android", "microsoft", "airplane", "warming", "earth", "minecraft", "medicine", "eminem", "video", "concert")
-        newsRequester.execute({ response ->
+    fun fetch(title: String = "Android", onSuccess: (itemsCount: Int) -> Unit) {
+        val list = listOf(
+            "android",
+            "microsoft",
+            "airplane",
+            "warming",
+            "earth",
+            "minecraft",
+            "medicine",
+            "eminem",
+            "video",
+            "concert"
+        )
+        newsRequester.execute(list.random()) { response ->
             requestResult.postValue(response)
-        }, list.random())
+            onSuccess(response?.totalResults!!)
+        }
     }
 
 }

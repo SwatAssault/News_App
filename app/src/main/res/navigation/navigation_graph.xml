@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
-        android:name="com.rkhasanov.newsApp.screens.ArticleFragment"
+        android:name="com.rkhasanov.newsApp.screens.article.ArticleFragment"
         android:label="fragment_article"
         tools:layout="@layout/fragment_article" >
         <action
