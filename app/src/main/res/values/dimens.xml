@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="article_card_elevation">10dp</dimen>
+    <dimen name="article_card_corner_radius">5dp</dimen>
+    <dimen name="article_card_title_size">20sp</dimen>
+    <dimen name="article_card_list_margin">10dp</dimen>
+    <dimen name="article_item_desc_size">15sp</dimen>
+    <dimen name="article_item_desc_margin">5dp</dimen>
+    <dimen name="app_margin">10dp</dimen>
+</resources>

@@ -1,4 +1,4 @@
-package com.rkhasanov.newsApp.model.pojo.newsRequest
+package com.rkhasanov.newsApp.model.newsRequest
 
 import com.google.gson.Gson
 import com.rkhasanov.newsApp.model.pojo.RequestResult
@@ -8,8 +8,8 @@ import java.io.IOException
 
 class NewsRequester {
 
-    fun execute(onResult: (response: RequestResult?) -> Unit) {
-        val url = "https://newsapi.org/v2/everything?qInTitle=Microsoft"
+    fun execute(onResult: (response: RequestResult?) -> Unit, title: String) {
+        val url = "https://newsapi.org/v2/everything?qInTitle=$title"
         val client = OkHttpClient()
 
         val map = mapOf("X-Api-Key" to "e1b919c8ae3d48658095b4fed9091816")
@@ -22,6 +22,8 @@ class NewsRequester {
                 response.use {
                     if (response.isSuccessful) {
                         onResult(Gson().fromJson(response.body!!.string(), RequestResult::class.java))
+                    } else {
+                        onResult(null)
                     }
                 }
             }
@@ -31,5 +33,6 @@ class NewsRequester {
             }
         })
     }
+
 
 }

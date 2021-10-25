@@ -1,44 +1,35 @@
 package com.rkhasanov.newsApp.view
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import com.rkhasanov.newsApp.R
-import com.rkhasanov.newsApp.model.pojo.newsRequest.NewsRequester
-import com.rkhasanov.newsApp.viewModel.ArticlesList
+import com.rkhasanov.newsApp.databinding.ActivityMainBinding
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.Navigation
+import com.rkhasanov.newsApp.utils.APP_CONTEXT
 
 
 class MainActivity : AppCompatActivity() {
 
-    private var articlesViewModel = ArticlesList()
+    lateinit var toolbar: Toolbar
+    lateinit var navController: NavController
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val button = findViewById<Button>(R.id.button)
-        val textView = findViewById<TextView>(R.id.textView)
-        //val layout = findViewById<LinearLayout>(R.id.newsScrollViewLayout)
-
-        articlesViewModel = ViewModelProvider(this).get(ArticlesList::class.java)
-
-        articlesViewModel.getArticles().observe(this, Observer {
-
-            textView.text = it.articles?.get(0)?.author
-
-            //var textView = TextView(this)
-            //textView.text = "12344"
-            //layout.addView(textView)
-        })
-
-        button.setOnClickListener {
-            articlesViewModel.fetch()
-        }
+        APP_CONTEXT = this
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        toolbar = binding.toolbar
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        setSupportActionBar(toolbar)
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }
