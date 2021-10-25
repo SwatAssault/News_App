@@ -9,9 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.rkhasanov.newsApp.R
-import com.rkhasanov.newsApp.databinding.ActivityMainBinding
 import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
-import com.rkhasanov.newsApp.model.pojo.Article
+import com.rkhasanov.newsApp.model.pojo.RequestResult
+import com.rkhasanov.newsApp.utils.toastPopUp
 
 class NewsListFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class NewsListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NewsListAdapter
-    private lateinit var newsListObserver: Observer<List<Article>>
+    private lateinit var newsListObserver: Observer<RequestResult>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,10 +43,11 @@ class NewsListFragment : Fragment() {
         recyclerView.adapter = adapter
 
         newsListObserver = Observer {
-            adapter.setArticlesList(it.asReversed())
+            adapter.setArticlesList(it.articles?.asReversed()!!)
+            toastPopUp(getString(R.string.news_fetched) + ": " + it.totalResults)
         }
 
-        newsListViewModel.getArticles().observe(this, newsListObserver)
+        newsListViewModel.getRequestResult().observe(this, newsListObserver)
 
         binding.fetchNewsButton.setOnClickListener {
             newsListViewModel.fetch()
@@ -56,7 +57,7 @@ class NewsListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        newsListViewModel.getArticles().removeObserver(newsListObserver)
+        newsListViewModel.getRequestResult().removeObserver(newsListObserver)
         recyclerView.adapter = null
     }
 
