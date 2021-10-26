@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.activity.addCallback
+import androidx.core.widget.ContentLoadingProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +28,8 @@ class NewsListFragment : Fragment() {
     private lateinit var adapter: NewsListAdapter
     private lateinit var newsListObserver: Observer<RequestResult>
 
+    private lateinit var loadingCircle: ProgressBar
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,14 +48,17 @@ class NewsListFragment : Fragment() {
         adapter = NewsListAdapter()
         recyclerView = binding.newsListRecyclerView
         recyclerView.adapter = adapter
+        loadingCircle = binding.loadingCircle
 
         newsListObserver = Observer {
             adapter.setArticlesList(it.articles?.asReversed()!!)
+            loadingCircle.visibility = View.GONE
         }
 
         newsListViewModel.getRequestResult().observe(this, newsListObserver)
 
         binding.fetchNewsButton.setOnClickListener {
+            loadingCircle.visibility = View.VISIBLE
             newsListViewModel.fetch {
 
             }

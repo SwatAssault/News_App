@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_news_list" >
         <action
             android:id="@+id/action_newsListFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            app:destination="@id/articleFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
@@ -21,6 +23,8 @@
         tools:layout="@layout/fragment_article" >
         <action
             android:id="@+id/action_articleFragment_to_newsListFragment"
-            app:destination="@id/newsListFragment" />
+            app:destination="@id/newsListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>
