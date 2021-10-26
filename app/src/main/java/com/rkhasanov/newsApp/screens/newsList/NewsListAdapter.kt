@@ -3,8 +3,10 @@ package com.rkhasanov.newsApp.screens.newsList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.model.pojo.Article
 import kotlinx.android.synthetic.main.article_item.view.*
@@ -33,6 +35,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsHolder>() {
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         holder.articleTitle.text = articlesList[position].title
         holder.articleDescription.text = articlesList[position].description
+        Glide.with(holder.itemView).load(articlesList[position].urlToImage).into(holder.articleImageUrl)
     }
 
     override fun getItemCount(): Int = articlesList.size
@@ -45,6 +48,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsHolder>() {
     class NewsHolder(view: View) : RecyclerView.ViewHolder(view) {
         val articleTitle: TextView = view.article_item_title
         val articleDescription: TextView = view.article_item_desc
+        val articleImageUrl: ImageView = view.article_item_image
     }
 
 }
