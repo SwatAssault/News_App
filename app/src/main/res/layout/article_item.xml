@@ -18,7 +18,7 @@
             android:lines="1"
             android:textColor="@color/design_default_color_primary_dark"
             android:textStyle="bold"
-            android:textSize="@dimen/article_card_title_size"
+            android:textSize="@dimen/article_item_title_size"
             android:gravity="start"
             android:layout_margin="@dimen/app_margin"
             android:layout_width="match_parent"

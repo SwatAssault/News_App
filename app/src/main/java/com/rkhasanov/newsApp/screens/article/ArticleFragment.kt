@@ -1,21 +1,21 @@
 package com.rkhasanov.newsApp.screens.article
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentArticleBinding
-import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
 import com.rkhasanov.newsApp.model.pojo.Article
-import com.rkhasanov.newsApp.model.pojo.RequestResult
-import com.rkhasanov.newsApp.screens.newsList.NewsListAdapter
-import com.rkhasanov.newsApp.screens.newsList.NewsListFragmentViewModel
-import com.rkhasanov.newsApp.utils.toastPopUp
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
 
 class ArticleFragment : Fragment() {
 
@@ -39,7 +39,19 @@ class ArticleFragment : Fragment() {
     }
 
     private fun init() {
-        binding.articleTitle.text = currentArticle.title
+        binding.articleCardTitle.text = currentArticle.title
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        binding.articleCardAuthor.text = getString(R.string.article_author, currentArticle.author)
+        val date: LocalDate = currentArticle.publishedAt?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()!!
+        binding.articleCardPublishDate.text = getString(R.string.article_published_on, date.format(formatter))
+        val requestOptions = RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .format(DecodeFormat.PREFER_RGB_565)
+        Glide.with(this)
+            .load(currentArticle.urlToImage)
+            .apply(requestOptions)
+            .into(binding.articleCardImage)
+        binding.articleCardContent.text = currentArticle.content
     }
 
     override fun onDestroyView() {

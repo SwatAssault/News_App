@@ -7,6 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.model.pojo.Article
 import kotlinx.android.synthetic.main.article_item.view.*
@@ -35,7 +39,15 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsHolder>() {
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         holder.articleTitle.text = articlesList[position].title
         holder.articleDescription.text = articlesList[position].description
-        Glide.with(holder.itemView).load(articlesList[position].urlToImage).into(holder.articleImageUrl)
+
+        val requestOptions = RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .format(DecodeFormat.PREFER_RGB_565)
+
+        Glide.with(holder.itemView)
+            .load(articlesList[position].urlToImage)
+            .apply(requestOptions)
+            .into(holder.articleImageUrl)
     }
 
     override fun getItemCount(): Int = articlesList.size
