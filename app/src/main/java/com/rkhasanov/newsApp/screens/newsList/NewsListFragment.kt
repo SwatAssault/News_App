@@ -1,10 +1,8 @@
 package com.rkhasanov.newsApp.screens.newsList
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.activity.addCallback
 import androidx.core.widget.ContentLoadingProgressBar
@@ -58,10 +56,16 @@ class NewsListFragment : Fragment() {
         newsListViewModel.getRequestResult().observe(this, newsListObserver)
 
         binding.fetchNewsButton.setOnClickListener {
-            loadingCircle.visibility = View.VISIBLE
-            newsListViewModel.fetch {
+            getNews()
+        }
 
-            }
+        getNews()
+    }
+
+    private fun getNews() {
+        loadingCircle.visibility = View.VISIBLE
+        newsListViewModel.fetch {
+
         }
     }
 

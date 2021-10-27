@@ -15,6 +15,9 @@
             app:destination="@id/articleFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_newsListFragment_to_favoritesListFragment2"
+            app:destination="@id/favoritesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
@@ -26,5 +29,14 @@
             app:destination="@id/newsListFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesListFragment"
+        android:name="com.rkhasanov.newsApp.screens.favorites.FavoritesListFragment"
+        android:label="fragment_favorites_list"
+        tools:layout="@layout/fragment_favorites_list" >
+        <action
+            android:id="@+id/action_favoritesListFragment_to_newsListFragment"
+            app:destination="@id/newsListFragment" />
     </fragment>
 </navigation>
