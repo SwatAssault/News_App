@@ -5,20 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentFavoritesListBinding
-import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
 import com.rkhasanov.newsApp.model.pojo.Article
-import com.rkhasanov.newsApp.model.pojo.RequestResult
-import com.rkhasanov.newsApp.screens.article.ArticleFragmentViewModel
 import com.rkhasanov.newsApp.screens.newsList.NewsListAdapter
-import com.rkhasanov.newsApp.screens.newsList.NewsListFragmentViewModel
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
-import com.rkhasanov.newsApp.utils.toastPopUp
 
 class FavoritesListFragment : Fragment() {
 
@@ -49,6 +43,11 @@ class FavoritesListFragment : Fragment() {
         adapter = NewsListAdapter()
         recyclerView = binding.favoritesListRecyclerView
         recyclerView.adapter = adapter
+        adapter.onItemClick = {
+            val bundle = Bundle()
+            bundle.putSerializable("article", it)
+            APP_CONTEXT.navController.navigate(R.id.action_favoritesListFragment_to_articleFragment, bundle)
+        }
 
         favoritesListObserver = Observer {
             adapter.setArticlesList(it.asReversed())
@@ -57,14 +56,6 @@ class FavoritesListFragment : Fragment() {
 
         favoritesListViewModel.fetchFavoriteArticles {
             // cannot show popup Why?
-        }
-    }
-
-    companion object {
-        fun onArticleClick(article: Article) {
-            val bundle = Bundle()
-            bundle.putSerializable("article", article)
-            APP_CONTEXT.navController.navigate(R.id.action_favoritesListFragment_to_articleFragment, bundle)
         }
     }
 

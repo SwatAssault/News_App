@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
-import com.rkhasanov.newsApp.model.pojo.Article
 import com.rkhasanov.newsApp.model.pojo.RequestResult
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
 
@@ -43,6 +42,12 @@ class NewsListFragment : Fragment() {
         adapter = NewsListAdapter()
         recyclerView = binding.newsListRecyclerView
         recyclerView.adapter = adapter
+        adapter.onItemClick = {
+            val bundle = Bundle()
+            bundle.putSerializable("article", it)
+            APP_CONTEXT.navController.navigate(R.id.action_newsListFragment_to_articleFragment, bundle)
+        }
+
         loadingCircle = binding.loadingCircle
 
         newsListObserver = Observer {
@@ -71,14 +76,6 @@ class NewsListFragment : Fragment() {
         _binding = null
         newsListViewModel.getRequestResult().removeObserver(newsListObserver)
         recyclerView.adapter = null
-    }
-
-    companion object {
-        fun onArticleClick(article: Article) {
-            val bundle = Bundle()
-            bundle.putSerializable("article", article)
-            APP_CONTEXT.navController.navigate(R.id.action_newsListFragment_to_articleFragment, bundle)
-        }
     }
 
 }
