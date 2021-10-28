@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -12,6 +14,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentArticleBinding
 import com.rkhasanov.newsApp.model.pojo.Article
+import com.rkhasanov.newsApp.utils.toastPopUp
+import com.rkhasanov.newsApp.view.MainActivityViewModel
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -23,6 +27,8 @@ class ArticleFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var articleFragmentViewModel: ArticleFragmentViewModel
     private lateinit var currentArticle: Article
+
+    private lateinit var addToFavoritesButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +45,7 @@ class ArticleFragment : Fragment() {
     }
 
     private fun init() {
+        articleFragmentViewModel = ViewModelProvider(this).get(ArticleFragmentViewModel::class.java)
         binding.articleCardTitle.text = currentArticle.title
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         binding.articleCardAuthor.text = getString(R.string.article_author, currentArticle.author)
@@ -52,6 +59,14 @@ class ArticleFragment : Fragment() {
             .apply(requestOptions)
             .into(binding.articleCardImage)
         binding.articleCardContent.text = currentArticle.content
+
+        addToFavoritesButton = binding.addToFavorites
+        addToFavoritesButton.setOnClickListener {
+            articleFragmentViewModel.addToFavorites(currentArticle) {
+                // cannot show popup Why?
+            }
+        }
+
     }
 
     override fun onDestroyView() {

@@ -39,9 +39,6 @@ class NewsListFragmentViewModel(application: Application) : AndroidViewModel(app
             requestResult.postValue(response)
             onSuccess(response?.totalResults!!)
         }
-
-
-
     }
 
 }

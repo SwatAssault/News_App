@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ProgressBar
-import androidx.activity.addCallback
-import androidx.core.widget.ContentLoadingProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +12,6 @@ import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
 import com.rkhasanov.newsApp.model.pojo.Article
 import com.rkhasanov.newsApp.model.pojo.RequestResult
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
-import com.rkhasanov.newsApp.utils.toastPopUp
 
 class NewsListFragment : Fragment() {
 
@@ -65,7 +62,7 @@ class NewsListFragment : Fragment() {
     private fun getNews() {
         loadingCircle.visibility = View.VISIBLE
         newsListViewModel.fetch {
-
+            // cannot show popup Why?
         }
     }
 

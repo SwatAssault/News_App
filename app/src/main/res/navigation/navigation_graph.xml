@@ -29,6 +29,9 @@
             app:destination="@id/newsListFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_articleFragment_to_favoritesListFragment"
+            app:destination="@id/favoritesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesListFragment"
@@ -38,5 +41,8 @@
         <action
             android:id="@+id/action_favoritesListFragment_to_newsListFragment"
             app:destination="@id/newsListFragment" />
+        <action
+            android:id="@+id/action_favoritesListFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
     </fragment>
 </navigation>

@@ -8,9 +8,10 @@ import androidx.navigation.NavController
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.ActivityMainBinding
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
+import com.rkhasanov.newsApp.utils.toastPopUp
 
 
 class MainActivity : AppCompatActivity()  {
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity()  {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         APP_CONTEXT = this
@@ -28,6 +31,11 @@ class MainActivity : AppCompatActivity()  {
         toolbar = binding.toolbar
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setSupportActionBar(toolbar)
+        init()
+    }
+
+    private fun init() {
+        mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

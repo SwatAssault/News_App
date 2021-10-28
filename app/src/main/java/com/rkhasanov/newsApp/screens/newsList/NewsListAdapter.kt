@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.model.pojo.Article
+import com.rkhasanov.newsApp.screens.favorites.FavoritesListFragment
 import kotlinx.android.synthetic.main.article_item.view.*
 
 
@@ -28,6 +29,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsHolder>() {
     override fun onViewAttachedToWindow(holder: NewsHolder) {
         holder.itemView.setOnClickListener {
             NewsListFragment.onArticleClick(articlesList[holder.adapterPosition])
+            //FavoritesListFragment.onArticleClick(articlesList[holder.adapterPosition])
         }
     }
 
