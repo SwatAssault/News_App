@@ -1,6 +1,5 @@
 package com.rkhasanov.newsApp.model.database.room
 
-import androidx.lifecycle.LiveData
 import com.rkhasanov.newsApp.model.pojo.Article
 
 

@@ -12,7 +12,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
-import com.rkhasanov.newsApp.utils.toastPopUp
 
 
 class MainActivity : AppCompatActivity()  {
