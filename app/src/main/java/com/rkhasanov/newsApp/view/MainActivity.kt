@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.ActivityMainBinding
@@ -16,7 +17,7 @@ import com.rkhasanov.newsApp.utils.toastPopUp
 
 class MainActivity : AppCompatActivity()  {
 
-    lateinit var toolbar: Toolbar
+    private lateinit var toolbar: Toolbar
     lateinit var navController: NavController
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         APP_CONTEXT = this
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
