@@ -4,23 +4,24 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ProgressBar
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
-import com.rkhasanov.newsApp.model.pojo.RequestResult
+import com.rkhasanov.newsApp.model.pojo.Article
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
+
 
 class NewsListFragment : Fragment() {
 
     private var _binding: FragmentNewsListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var newsListViewModel: NewsListFragmentViewModel
+    private val newsListViewModel: NewsListFragmentViewModel by viewModels()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NewsListAdapter
-    private lateinit var newsListObserver: Observer<RequestResult>
+    private lateinit var newsListObserver: Observer<List<Article>>
 
     private lateinit var loadingCircle: ProgressBar
 
@@ -38,7 +39,6 @@ class NewsListFragment : Fragment() {
     }
 
     private fun init() {
-        newsListViewModel = ViewModelProvider(this).get(NewsListFragmentViewModel::class.java)
         adapter = NewsListAdapter()
         recyclerView = binding.newsListRecyclerView
         recyclerView.adapter = adapter
@@ -51,11 +51,11 @@ class NewsListFragment : Fragment() {
         loadingCircle = binding.loadingCircle
 
         newsListObserver = Observer {
-            adapter.setArticlesList(it.articles?.asReversed()!!)
+            adapter.setArticlesList(it.asReversed())
             loadingCircle.visibility = View.GONE
         }
 
-        newsListViewModel.getRequestResult().observe(this, newsListObserver)
+        newsListViewModel.articles.observe(this, newsListObserver)
 
         binding.fetchNewsButton.setOnClickListener {
             getNews()
@@ -66,15 +66,13 @@ class NewsListFragment : Fragment() {
 
     private fun getNews() {
         loadingCircle.visibility = View.VISIBLE
-        newsListViewModel.fetch {
-            // cannot show popup Why?
-        }
+        newsListViewModel.fetchNews()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        newsListViewModel.getRequestResult().removeObserver(newsListObserver)
+        newsListViewModel.articles.removeObserver(newsListObserver)
         recyclerView.adapter = null
     }
 

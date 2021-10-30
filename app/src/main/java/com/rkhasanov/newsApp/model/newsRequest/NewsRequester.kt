@@ -1,38 +1,26 @@
 package com.rkhasanov.newsApp.model.newsRequest
 
-import com.google.gson.Gson
 import com.rkhasanov.newsApp.model.pojo.RequestResult
-import okhttp3.*
-import okhttp3.Headers.Companion.toHeaders
-import java.io.IOException
+import com.rkhasanov.newsApp.utils.NEWS_API_BASE_URL
+import kotlinx.coroutines.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 class NewsRequester {
 
-    fun execute(title: String, onResult: (response: RequestResult?) -> Unit) {
-        val url = "https://newsapi.org/v2/everything?qInTitle=$title"
-        val client = OkHttpClient()
+    fun getRandomNews(title: String, onSuccess: (response: RequestResult?) -> Unit) {
 
-        val map = mapOf("X-Api-Key" to "e1b919c8ae3d48658095b4fed9091816")
-        val headers: Headers = map.toHeaders()
+        val newsApi = Retrofit.Builder()
+            .baseUrl(NEWS_API_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+            .create(ApiRequests::class.java)
 
-        val request = Request.Builder().url(url).headers(headers).build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                response.use {
-                    if (response.isSuccessful) {
-                        onResult(Gson().fromJson(response.body!!.string(), RequestResult::class.java))
-                    } else {
-                        onResult(null)
-                    }
-                }
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = newsApi.getNews(title)
+            if (response.isSuccessful) {
+                onSuccess(response.body())
             }
-
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
-        })
+        }
     }
-
 
 }

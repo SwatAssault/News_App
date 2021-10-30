@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
@@ -21,7 +22,7 @@ class ArticleFragment : Fragment() {
 
     private var _binding: FragmentArticleBinding? = null
     private val binding get() = _binding!!
-    private lateinit var articleFragmentViewModel: ArticleFragmentViewModel
+    private val articleFragmentViewModel: ArticleFragmentViewModel by viewModels()
     private lateinit var currentArticle: Article
 
     private lateinit var addToFavoritesButton: Button
@@ -41,7 +42,6 @@ class ArticleFragment : Fragment() {
     }
 
     private fun init() {
-        articleFragmentViewModel = ViewModelProvider(this).get(ArticleFragmentViewModel::class.java)
         binding.articleCardTitle.text = currentArticle.title
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         binding.articleCardAuthor.text = getString(R.string.article_author, currentArticle.author)

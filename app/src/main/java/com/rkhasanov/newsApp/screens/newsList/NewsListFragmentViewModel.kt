@@ -4,20 +4,17 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.rkhasanov.newsApp.model.newsRequest.NewsRequester
+import com.rkhasanov.newsApp.model.pojo.Article
 import com.rkhasanov.newsApp.model.pojo.RequestResult
 
 
 class NewsListFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var requestResult = MutableLiveData<RequestResult>()
+    var articles = MutableLiveData<List<Article>>()
 
     private var newsRequester = NewsRequester()
 
-    fun getRequestResult(): MutableLiveData<RequestResult> {
-        return requestResult
-    }
-
-    fun fetch(title: String = "Android", onSuccess: (itemsCount: Int) -> Unit) {
+    fun fetchNews() {
         val list = listOf(
             "android",
             "microsoft",
@@ -30,9 +27,9 @@ class NewsListFragmentViewModel(application: Application) : AndroidViewModel(app
             "video",
             "concert"
         )
-        newsRequester.execute(list.random()) { response ->
-            requestResult.postValue(response)
-            onSuccess(response?.totalResults!!)
+
+        newsRequester.getRandomNews(list.random()) {
+            articles.postValue(it?.articles)
         }
     }
 
