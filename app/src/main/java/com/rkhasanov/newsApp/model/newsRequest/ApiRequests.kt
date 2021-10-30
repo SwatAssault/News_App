@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
-interface ApiRequests {
+interface NewsApi {
 
     @Headers(
         "X-Api-Key: e1b919c8ae3d48658095b4fed9091816",

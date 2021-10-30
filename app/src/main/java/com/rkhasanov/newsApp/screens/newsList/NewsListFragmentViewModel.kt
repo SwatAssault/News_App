@@ -1,18 +1,22 @@
 package com.rkhasanov.newsApp.screens.newsList
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.rkhasanov.newsApp.model.newsRequest.NewsRequester
 import com.rkhasanov.newsApp.model.pojo.Article
-import com.rkhasanov.newsApp.model.pojo.RequestResult
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class NewsListFragmentViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class NewsListFragmentViewModel @Inject constructor(
+    private val newsRequester: NewsRequester
+): ViewModel() {
 
     var articles = MutableLiveData<List<Article>>()
-
-    private var newsRequester = NewsRequester()
 
     fun fetchNews() {
         val list = listOf(
@@ -28,8 +32,10 @@ class NewsListFragmentViewModel(application: Application) : AndroidViewModel(app
             "concert"
         )
 
-        newsRequester.getRandomNews(list.random()) {
-            articles.postValue(it?.articles)
+        viewModelScope.launch(Dispatchers.IO) {
+            newsRequester.getRandomNews(list.random()) {
+                articles.postValue(it?.articles)
+            }
         }
     }
 

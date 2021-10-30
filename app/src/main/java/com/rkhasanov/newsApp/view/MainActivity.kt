@@ -12,9 +12,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
 
-class MainActivity : AppCompatActivity()  {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
     lateinit var navController: NavController
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity()  {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.go_to_favorites -> {
                 APP_CONTEXT.navController.navigate(R.id.favoritesListFragment)
             }

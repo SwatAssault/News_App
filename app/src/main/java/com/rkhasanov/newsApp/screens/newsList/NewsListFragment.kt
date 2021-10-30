@@ -11,8 +11,12 @@ import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentNewsListBinding
 import com.rkhasanov.newsApp.model.pojo.Article
 import com.rkhasanov.newsApp.utils.APP_CONTEXT
+import com.rkhasanov.newsApp.utils.toastPopUp
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.FragmentScoped
 
 
+@AndroidEntryPoint
 class NewsListFragment : Fragment() {
 
     private var _binding: FragmentNewsListBinding? = null
