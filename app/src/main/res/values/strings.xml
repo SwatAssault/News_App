@@ -7,4 +7,7 @@
     <string name="article_published_on">Published on: %s</string>
     <string name="favorite_articles_text">Favorite articles</string>
     <string name="add_to_favorites_text">Add to favorites</string>
+    <string name="news">News</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
 </resources>

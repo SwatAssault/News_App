@@ -26,7 +26,6 @@ object AppModule {
     fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create(NewsApi::class.java)
 
     @Provides
-    @Singleton
     fun provideNewsRequester(newsApi: NewsApi) : NewsRequester {
         return NewsRequester(newsApi)
     }

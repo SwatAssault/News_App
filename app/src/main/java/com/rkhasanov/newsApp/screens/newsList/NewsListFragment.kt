@@ -23,11 +23,8 @@ class NewsListFragment : Fragment() {
     private val binding get() = _binding!!
     private val newsListViewModel: NewsListFragmentViewModel by viewModels()
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NewsListAdapter
     private lateinit var newsListObserver: Observer<List<Article>>
-
-    private lateinit var loadingCircle: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,19 +41,16 @@ class NewsListFragment : Fragment() {
 
     private fun init() {
         adapter = NewsListAdapter()
-        recyclerView = binding.newsListRecyclerView
-        recyclerView.adapter = adapter
+        binding.newsListRecyclerView.adapter = adapter
         adapter.onItemClick = {
             val bundle = Bundle()
             bundle.putSerializable("article", it)
             APP_CONTEXT.navController.navigate(R.id.action_newsListFragment_to_articleFragment, bundle)
         }
 
-        loadingCircle = binding.loadingCircle
-
         newsListObserver = Observer {
             adapter.setArticlesList(it.asReversed())
-            loadingCircle.visibility = View.GONE
+            binding.loadingCircle.visibility = View.GONE
         }
 
         newsListViewModel.articles.observe(this, newsListObserver)
@@ -69,15 +63,15 @@ class NewsListFragment : Fragment() {
     }
 
     private fun getNews() {
-        loadingCircle.visibility = View.VISIBLE
+        binding.loadingCircle.visibility = View.VISIBLE
         newsListViewModel.fetchNews()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         newsListViewModel.articles.removeObserver(newsListObserver)
-        recyclerView.adapter = null
+        binding.newsListRecyclerView.adapter = null
+        _binding = null
     }
 
 }

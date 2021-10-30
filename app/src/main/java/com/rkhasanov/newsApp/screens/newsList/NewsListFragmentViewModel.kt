@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsListFragmentViewModel @Inject constructor(
     private val newsRequester: NewsRequester
-): ViewModel() {
+) : ViewModel() {
 
     var articles = MutableLiveData<List<Article>>()
 

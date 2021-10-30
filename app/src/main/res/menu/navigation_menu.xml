@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".MainActivity">
 
     <item
         android:id="@+id/go_to_news_list"
         android:icon="@drawable/ic_news_list"
-        app:showAsAction="ifRoom"
-        android:title="" />
+        android:title="@string/news" />
 
     <item
         android:id="@+id/go_to_favorites"
         android:icon="@drawable/ic_favorites"
-        app:showAsAction="ifRoom"
-        android:title="" />
+        android:title="@string/favorites" />
+
+    <item
+        android:id="@+id/go_to_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
 
 </menu>
