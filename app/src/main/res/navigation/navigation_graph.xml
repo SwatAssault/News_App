@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/newsListFragment"
-        android:name="com.rkhasanov.newsApp.screens.newsList.NewsListFragment"
+        android:name="com.rkhasanov.newsApp.presentation.news.randomArticles.ArticlesListFragment"
         android:label="fragment_news_list"
-        tools:layout="@layout/fragment_news_list" >
+        tools:layout="@layout/fragment_articles_list" >
         <action
             android:id="@+id/action_newsListFragment_to_articleFragment"
             app:destination="@id/articleFragment"
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
-        android:name="com.rkhasanov.newsApp.screens.article.ArticleFragment"
+        android:name="com.rkhasanov.newsApp.presentation.news.article.ArticleFragment"
         android:label="fragment_article"
         tools:layout="@layout/fragment_article" >
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesListFragment"
-        android:name="com.rkhasanov.newsApp.screens.favorites.FavoritesListFragment"
+        android:name="com.rkhasanov.newsApp.presentation.news.favorites.FavoritesListFragment"
         android:label="fragment_favorites_list"
         tools:layout="@layout/fragment_favorites_list" >
         <action

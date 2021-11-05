@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".screens.article.ArticleFragment">
+    tools:context=".presentation.news.article.ArticleFragment">
 
     <ScrollView
         android:id="@+id/article_card_scroll_view"
