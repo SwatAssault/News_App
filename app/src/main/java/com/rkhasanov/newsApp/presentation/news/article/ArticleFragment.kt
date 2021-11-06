@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,16 +15,21 @@ import com.bumptech.glide.request.RequestOptions
 import com.rkhasanov.newsApp.R
 import com.rkhasanov.newsApp.databinding.FragmentArticleBinding
 import com.rkhasanov.newsApp.domain.model.Article
+import com.rkhasanov.newsApp.extentions.launchWhenStarted
+import com.rkhasanov.newsApp.presentation.BasicRequestState
+import com.rkhasanov.newsApp.presentation.news.ArticleState
+import com.rkhasanov.newsApp.utils.toastPopUp
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 import java.time.format.DateTimeFormatter
 
+@AndroidEntryPoint
 class ArticleFragment : Fragment() {
 
     private var _binding: FragmentArticleBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ArticleFragmentViewModel by viewModels()
     private lateinit var currentArticle: Article
-
-    private lateinit var addToFavoritesButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +60,19 @@ class ArticleFragment : Fragment() {
             .into(binding.articleCardImage)
         binding.articleCardContent.text = currentArticle.content
 
-        addToFavoritesButton = binding.addToFavorites
+        binding.addToFavorites.setOnClickListener {
+            viewModel.addToFavorites(currentArticle)
+        }
+
+        viewModel.article.onEach {
+            when(it) {
+                is BasicRequestState.Success -> {
+                    toastPopUp(getString(R.string.add_to_favorites))
+                }
+                is BasicRequestState.Error -> {}
+                BasicRequestState.Loading -> {}
+            }
+        }.launchWhenStarted(lifecycleScope)
 
     }
 

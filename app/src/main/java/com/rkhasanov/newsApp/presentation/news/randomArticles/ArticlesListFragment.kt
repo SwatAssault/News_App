@@ -59,8 +59,8 @@ class ArticlesListFragment : Fragment() {
                 }
 
                 is ArticleState.Success -> {
-                    binding.loadingCircle.visibility = View.GONE
                     adapter.setArticlesList(it.articles.asReversed())
+                    binding.loadingCircle.visibility = View.GONE
                 }
             }
         }.launchWhenStarted(lifecycleScope)
@@ -68,7 +68,6 @@ class ArticlesListFragment : Fragment() {
         viewModel.getRandomArticles()
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

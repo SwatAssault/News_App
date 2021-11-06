@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/KotlinApps/newsApp/app/src/main/res/layout/fragment_articles_list.xml" value="0.33695652173913043" />
+        <entry key="..\:/KotlinApps/newsApp/app/src/main/res/layout/fragment_favorites_list.xml" value="0.1707193515704154" />
         <entry key="..\:/KotlinApps/newsApp/app/src/main/res/layout/fragment_news_list.xml" value="0.17831813576494426" />
       </map>
     </option>
